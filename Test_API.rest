@@ -1,22 +1,22 @@
 //REGISTER
-# POST http://94.74.86.174:8080/api/register
+POST http://94.74.86.174:8080/api/register
+Content-Type: application/json
+
+{
+    "username": "test1",
+    "password": "test1",
+    "email": "encep.suryanajr1@gmail.com"
+}
+
+
+//LOGIN
+# POST http://94.74.86.174:8080/api/login
 # Content-Type: application/json
 
 # {
 #     "username": "test",
-#     "password": "test",
-#     "email": "encep.suryanajr@gmail.com"
+#     "password": "test"
 # }
-
-
-//LOGIN
-POST http://94.74.86.174:8080/api/login
-Content-Type: application/json
-
-{
-    "username": "test",
-    "password": "test"
-}
 
 //CHEK
 # GET http://94.74.86.174:8080/api/

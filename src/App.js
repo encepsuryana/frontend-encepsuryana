@@ -1,20 +1,28 @@
 import React from 'react';
-import { ChakraProvider, Box, VStack, Code } from '@chakra-ui/react';
-import Header from './components/Header';
+import { ChakraProvider, theme, Container } from '@chakra-ui/react';
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Dashboard from './components/Dashboard';
-import Login from './components/Login';
+//Importing components
 import Home from './components/Home';
+import Header from './components/Header';
+import Login from './components/Login';
+import Register from './components/Register';
+
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="login" element={<Login />} />
-      </Routes>
-    </BrowserRouter>
+    <ChakraProvider theme={theme}>
+      <Container maxW="2xl">
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Routes>
+        </BrowserRouter>
+      </Container>
+    </ChakraProvider>
   );
 }
 
