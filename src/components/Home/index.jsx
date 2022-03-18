@@ -1,31 +1,57 @@
+import { Box, Heading, VStack } from '@chakra-ui/react';
+import axios from 'axios';
 import React from 'react';
 
 export default function Home() {
-  const [todos, setTodos] = React.useState([]);
-  const [todo, setTodo] = React.useState('');
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    setTodos([...todos, todo]);
-    setTodo('');
+  //get all data from API with Bearer auth_token in localStorage
+  const BASE_URL = 'http://94.74.86.174:8080/api/';
+  const token = localStorage.getItem('auth_token');
+  const headers = {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
   };
+  const [todos, setTodos] = React.useState([]);
 
-  const handleChange = e => {
-    setTodo(e.target.value);
+  //get all data from API with Bearer auth_token in localStorage
+  React.useEffect(() => {
+    axios
+      .get(BASE_URL + 'checklist', headers)
+      .then(res => {
+        setTodos(res.data.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    //validate if has a not token
+    validateToken();
+  }, []);
+
+  //validate when not have auth_token
+  const validateToken = () => {
+    const token = localStorage.getItem('auth_token');
+    if (token) {
+      return true;
+    }
+    return false;
   };
 
   return (
-    <div>
-      <h1>Home</h1>
-      <ul>
-        {todos.map(todo => (
-          <li key={todo}>{todo}</li>
-        ))}
-      </ul>
-      <form onSubmit={handleSubmit}>
-        <input type="text" value={todo} onChange={handleChange} />
-        <button type="submit">Add</button>
-      </form>
-    </div>
+    <VStack>
+      <Box boxShadow="md" py={8} px={12} rounded="md">
+        <Heading mb={8}>{!validateToken() ? 'Login' : 'Home'}</Heading>
+        {/* if not have auth_token show message else show data */}
+        {!validateToken() ? (
+          <p>You need to login to see the list</p>
+        ) : (
+          <ul>
+            {todos.map(todo => (
+              <li key={todo.id}>{todo.title}</li>
+            ))}
+          </ul>
+        )}
+      </Box>
+    </VStack>
   );
 }
