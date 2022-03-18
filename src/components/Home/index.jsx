@@ -11,6 +11,7 @@ export default function Home() {
       Authorization: 'Bearer ' + token,
     },
   };
+
   const [todos, setTodos] = React.useState([]);
 
   //get all data from API with Bearer auth_token in localStorage
@@ -26,6 +27,12 @@ export default function Home() {
 
     //validate if has a not token
     validateToken();
+
+    if (token === null) {
+      console.log('Access Denied! auth_token null');
+    } else {
+      console.log('Access Granted! auth_token not null');
+    }
   }, []);
 
   //validate when not have auth_token
