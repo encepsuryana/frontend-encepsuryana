@@ -16,15 +16,6 @@ export default function Home() {
 
   //get all data from API with Bearer auth_token in localStorage
   React.useEffect(() => {
-    axios
-      .get(BASE_URL + 'checklist', headers)
-      .then(res => {
-        setTodos(res.data.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-
     //validate if has a not token
     validateToken();
 
@@ -32,6 +23,14 @@ export default function Home() {
       console.log('Access Denied! auth_token null');
     } else {
       console.log('Access Granted! auth_token not null');
+      axios
+        .get(BASE_URL + 'checklist', headers)
+        .then(res => {
+          setTodos(res.data.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }, []);
 
